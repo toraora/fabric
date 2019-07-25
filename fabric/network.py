@@ -535,6 +535,15 @@ def connect(user, host, port, cache, seek_gateway=True):
             ):
                 raise NetworkError(msg, e)
 
+            # While using huge concurrent connections, some connection may not
+            # handle MSG_NEWKEYS yet unexpectedly.  Then SSHClient.connect()
+            # will raise this exception.  Just retry would be helpful.
+            if (e.__class__ is ssh.SSHException \
+                and msg == 'No existing session'):
+                if _tried_enough(tries):
+                    raise NetworkError(msg, e)
+                continue
+
             # Otherwise, assume an auth exception, and prompt for new/better
             # password.
 
