@@ -470,6 +470,7 @@ def connect(user, host, port, cache, seek_gateway=True):
                 allow_agent=not env.no_agent,
                 look_for_keys=not env.no_keys,
                 sock=sock,
+                banner_timeout=env.banner_timeout,
             )
             for suffix in ('auth', 'deleg_creds', 'kex'):
                 name = "gss_" + suffix
