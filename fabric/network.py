@@ -576,6 +576,14 @@ def connect(user, host, port, cache, seek_gateway=True):
                 # which one raised the exception. Best not to try.
                 prompt = "[%s] Passphrase for private key"
                 text = prompt % env.host_string
+
+            # if we are explicitly told that this connection is passwordless,
+            # then just retry (this case is hit when we get proxy errors)
+            if env.no_password:
+                if _tried_enough(tries):
+                    raise NetworkError(msg, e)
+                continue
+
             password = prompt_for_password(text)
             # Update env.password, env.passwords if empty
             set_password(user, host, port, password)
