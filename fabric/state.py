@@ -335,6 +335,7 @@ env = _AttributeDict({
     'abort_exception': None,
     'again_prompt': 'Sorry, try again.',
     'all_hosts': [],
+    'banner_timeout': 15,
     'combine_stderr': True,
     'colorize_errors': False,
     'command': None,
@@ -354,6 +355,7 @@ env = _AttributeDict({
     'host_string': None,
     'lcwd': '',  # Must be empty string, not None, for concatenation purposes
     'local_user': _get_system_username(),
+    'no_password': False,
     'output_prefix': True,
     'passwords': {},
     'path': '',
